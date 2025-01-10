@@ -1,0 +1,263 @@
+<ng-container *ngIf="user$ as _user">
+<!--begin::Menu wrapper-->
+<div id="kt_app_sidebar_menu_scroll" class="scroll-y my-5 mx-3" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
+  <!--begin::Menu-->
+  <div class="menu menu-column menu-rounded menu-sub-indention fw-semibold fs-6" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+    <!-- Dashboard -->
+    <div class="menu-item">
+      <a class="menu-link without-sub" routerLink="/dashboard" routerLinkActive="active">
+        <span class="menu-icon">
+          <app-keenicon name="element-11" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" translate="MENU.DASHBOARD"></span>
+      </a>
+    </div>
+    <!-- Users -->
+    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show" *ngxPermissionsOnly="['full_access']">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="profile-user" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title" data-link="/users" translate="MENU.USERS"></span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/users">
+            <span class="menu-bullet">
+              <i class="ki-duotone ki-people">
+                <span class="path1"></span>
+                <span class="path2"></span>
+                <span class="path3"></span>
+                <span class="path4"></span>
+                <span class="path5"></span>
+              </i>
+            </span>
+            <span class="menu-title" translate="MENU.USERS"></span>
+          </a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/roles">
+            <span class="menu-bullet">
+              <i class="ki-duotone ki-user-square">
+                <span class="path1"></span>
+                <span class="path2"></span>
+                <span class="path3"></span>
+                <span class="path4"></span>
+                <span class="path5"></span>
+              </i>
+            </span>
+            <span class="menu-title" translate="MENU.ROLES"></span>
+          </a>
+        </div>
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/permissions">
+            <span class="menu-bullet">
+              <i class="ki-duotone ki-user-tick">
+                <span class="path1"></span>
+                <span class="path2"></span>
+                <span class="path3"></span>
+                <span class="path4"></span>
+                <span class="path5"></span>
+              </i>
+            </span>
+            <span class="menu-title"translate="MENU.PERMISSIONS"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Separator -->
+    <div class="menu-item" *ngxPermissionsOnly="['full_access', 'view_web']">
+      <div class="menu-content pt-8 pb-2">
+        <span class="menu-section text-muted text-uppercase fs-8 ls-1">WEB</span>
+      </div>
+    </div>
+
+    <!-- WEB -->
+    <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show" *ngxPermissionsOnly="['full_access', 'view_web']">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="chrome" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title">Web Site</span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+          <!-- Categories -->
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLink="/web-site/categories" routerLinkActive="active">
+              <span class="menu-icon">
+                <app-keenicon name="category" class="fs-2"></app-keenicon>
+              </span>
+              <span class="menu-title" translate="MENU.CATEGORIES"></span>
+            </a>
+          </div>
+          <!-- Products -->
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLink="/web-site/products" routerLinkActive="active">
+              <span class="menu-icon">
+                <app-keenicon name="shop" class="fs-2"></app-keenicon>
+              </span>
+              <span class="menu-title" translate="MENU.PRODUCTS"></span>
+            </a>
+          </div>
+          <!-- Blogs -->
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLink="/web-site/blogs" routerLinkActive="active">
+              <span class="menu-icon">
+                <app-keenicon name="social-media" class="fs-2"></app-keenicon>
+              </span>
+              <span class="menu-title" translate="MENU.BLOGS"></span>
+            </a>
+          </div>
+          <!-- Tags -->
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLink="/web-site/tags" routerLinkActive="active">
+              <span class="menu-icon">
+                <app-keenicon name="tablet" class="fs-2"></app-keenicon>
+              </span>
+              <span class="menu-title" translate="MENU.TAGS"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Separator -->
+    <!-- <div class="menu-item" *ngxPermissionsOnly="['full_access', 'view_warehouse', 'view_sales']">
+      <div class="menu-content pt-8 pb-2">
+        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Sistema</span>
+      </div>
+    </div> -->
+
+    <!-- System -->
+    <!-- <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show" *ngxPermissionsOnly="['full_access', 'view_warehouse', 'view_sales']">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="chrome" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title">Sistema</span>
+        <span class="menu-arrow"></span>
+      </span>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg"> -->
+        <!-- Suppliers -->
+        <!-- <div class="menu-item">
+          <a class="menu-link without-sub" routerLink="/system/suppliers" routerLinkActive="active">
+              <span class="menu-icon">
+                <app-keenicon name="shop" class="fs-2"></app-keenicon>
+              </span>
+            <span class="menu-title">Proveedores</span>
+          </a>
+        </div>
+        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+            <span class="menu-link">
+              <span class="menu-icon">
+                <app-keenicon name="delivery-2" class="fs-2"></app-keenicon>
+              </span>
+              <span class="menu-title" data-link="/system/warehouse">Almacen</span>
+              <span class="menu-arrow"></span>
+            </span>
+          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg"> -->
+            <!-- Categories -->
+            <!-- <div class="menu-item">
+              <a class="menu-link without-sub" routerLink="/system/warehouse/categories" routerLinkActive="active">
+              <span class="menu-icon">
+                <app-keenicon name="category" class="fs-2"></app-keenicon>
+              </span>
+                <span class="menu-title" translate="MENU.CATEGORIES"></span>
+              </a>
+            </div> -->
+            <!-- Products -->
+            <!-- <div class="menu-item">
+              <a class="menu-link without-sub" routerLink="/system/warehouse/products" routerLinkActive="active">
+              <span class="menu-icon">
+                <app-keenicon name="shop" class="fs-2"></app-keenicon>
+              </span>
+                <span class="menu-title" translate="MENU.PRODUCTS"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+        <div class="menu-item menu-accordion" routerLinkActive="here show" data-kt-menu-trigger="click">
+            <span class="menu-link">
+              <span class="menu-icon">
+                <app-keenicon name="chart-line-up" class="fs-2"></app-keenicon>
+              </span>
+              <span class="menu-title" data-link="/system/sales">Ventas</span>
+              <span class="menu-arrow"></span>
+            </span>
+          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg"> -->
+            <!-- Categories -->
+            <!-- <div class="menu-item">
+              <a class="menu-link without-sub" routerLink="/system/sales/customers" routerLinkActive="active">
+              <span class="menu-icon">
+                <app-keenicon name="category" class="fs-2"></app-keenicon>
+              </span>
+                <span class="menu-title">Clientes</span>
+              </a>
+            </div> -->
+            <!-- Purchase Orders -->
+            <!-- <div class="menu-item">
+              <a class="menu-link without-sub" routerLink="/system/sales/quotations" routerLinkActive="active">
+              <span class="menu-icon">
+                <app-keenicon name="shop" class="fs-2"></app-keenicon>
+              </span>
+                <span class="menu-title">Cotizaciones</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Separator -->
+    <div class="menu-item">
+      <div class="menu-content pt-8 pb-2">
+        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Miselaneos</span>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <!-- Chat -->
+      <div class="menu-item menu-accordion" data-kt-menu-trigger="click" routerLinkActive="here show">
+            <span class="menu-link">
+              <span class="menu-icon">
+                <app-keenicon name="message-text-2" class="fs-2"></app-keenicon>
+              </span>
+              <span class="menu-title"
+                    data-link="/chat">Chat
+              </span>
+              <span class="menu-arrow"></span>
+            </span>
+        <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLinkActive="active" routerLink="/chat/private-chat">
+                  <span
+                    class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                  </span>
+              <span class="menu-title">Chats Privados</span>
+            </a>
+          </div>
+          <div class="menu-item">
+            <a class="menu-link without-sub" routerLinkActive="active" routerLink="/chat/group-chat">
+                  <span
+                    class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                  </span>
+              <span class="menu-title">Chat de Grupo</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--end::Menu-->
+  </div>
+</div>
+<!--end::Menu wrapper-->
+</ng-container>

@@ -1,0 +1,16 @@
+FROM alpine:3.18
+
+RUN apk add py3-pip
+
+WORKDIR /app
+
+COPY . /app
+
+# Copia el archivo .env.prod
+# COPY .env.prod .env.prod
+
+RUN pip --no-cache-dir install -r requirements.txt
+
+EXPOSE 4301
+
+CMD ["python", "-m", "src.app"]

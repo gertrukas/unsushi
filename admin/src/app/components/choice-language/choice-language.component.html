@@ -1,0 +1,28 @@
+<div (mouseenter)="show = true" (mouseleave)="show = false">
+  <div class="menu-item px-5" data-kt-menu-trigger="click" data-kt-menu-placement="left-start" data-kt-menu-flip="bottom">
+    <a class="menu-link px-5 cursor-pointer">
+      <span class="menu-title position-relative">
+        Idioma
+        <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0" >
+          {{ language.name }}{{ " " }}
+          <img
+            class="w-15px h-15px rounded-1 ms-2"
+            [src]="language.flag"
+            alt="metronic"
+          />
+        </span>
+      </span>
+    </a>
+ 
+    <div class="menu-rounded w-150px py-4 position-absolute bg-light" style="right: 6%;" [ngClass]="{'menu-sub-dropdown': !show}">
+      <div *ngFor="let l of langs" class="menu-item px-3 cursor-pointer" (click)="selectLanguage(l.lang)">
+        <a class="menu-link d-flex px-5" [ngClass]="l.lang === language.lang ? 'active' : ''" (click)="show = !show">
+          <span class="symbol symbol-20px me-4">
+            <img class="rounded-1" [src]="l.flag" alt="metronic" />
+          </span>
+          {{ l.name }}
+        </a>
+      </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,51 @@
+<div class="card mb-5 mb-xl-10" id="kt_profile_details_view" *ngIf="user$ | async as user">
+  <div class="card-header cursor-pointer">
+    <div class="card-title m-0">
+      <h3 class="fw-bolder m-0">Detalles de perfil</h3>
+    </div>
+
+    <a routerLink="/crafted/account/settings" class="btn btn-primary align-self-center">
+      Editar perfil
+    </a>
+  </div>
+
+  <div class="card-body p-9">
+    <div class="row mb-7">
+      <label class="col-lg-4 fw-bold text-muted">Nombre compelto</label>
+      <div class="col-lg-8">
+        <span class="fw-bolder fs-6 text-gray-900">{{ user.name }}</span>
+      </div>
+    </div>
+
+    <div class="row mb-7">
+      <label class="col-lg-4 fw-bold text-muted">
+        Correo Electronico
+      </label>
+
+      <div class="col-lg-8 d-flex align-items-center">
+        <span class="fw-bolder fs-6 me-2">{{ user.email }}</span>
+      </div>
+    </div>
+
+    <div class="row mb-7">
+      <label class="col-lg-4 fw-bold text-muted">
+        Telefono
+        <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="El número de teléfono debe estar activo"></i>
+      </label>
+
+      <div class="col-lg-8 d-flex align-items-center">
+        <span class="fw-bolder fs-6 me-2">{{ user.phone }}</span>
+<!--        <span class="badge badge-success">Verified</span>-->
+      </div>
+    </div>
+
+    <div class="row mb-7">
+      <label class="col-lg-4 fw-bold text-muted">Comunicación</label>
+
+      <div class="col-lg-8">
+        <span class="fw-bolder fs-6 text-gray-900">Email, Telefono</span>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,22 @@
+.env.dev
+.env.qa
+.env.prod
+uploads/products/images/
+api/uploads/services/images/
+uploads/equipments/images/
+uploads/equipments/pdfs/
+src/config/__pycache__
+src/services/__pycache__
+src/routes/__pycache__
+src/models/__pycache__
+/src/config/__pycache__
+/src/services/__pycache__
+/src/routes/__pycache__
+/src/models/__pycache__
+# Ignorar todos los archivos .pyc
+*.cpython-312.pyc
+*.pyc
+/path
+path
+venv
+.venv

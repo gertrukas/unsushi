@@ -1,0 +1,8 @@
+FROM node:16-slim
+
+## Copy source code
+COPY . .
+
+EXPOSE 4402
+
+CMD [ "node", "dist/site/server/server.mjs" ]

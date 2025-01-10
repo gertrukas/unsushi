@@ -1,0 +1,224 @@
+<div class="card">
+  <div class="card-header border-0 pt-6">
+    <!--begin::Card title-->
+    <div class="card-title">
+      <!--begin::Search-->
+      <div class="d-flex align-items-center position-relative my-1">
+        <app-keenicon name="magnifier" class="fs-3 position-absolute ms-5"></app-keenicon>
+        <input type="text" data-action="filter" class="form-control form-control-solid w-250px ps-12" placeholder="Buscar Etiqueta">
+      </div>
+      <!--end::Search-->
+    </div>
+    <!--begin::Card title-->
+
+    <!--begin::Card toolbar-->
+    <div class="card-toolbar">
+      <!--begin::Toolbar-->
+      <div class="d-flex justify-content-end">
+        <!--begin::Add user-->
+        <button type="button" class="btn btn-primary" data-action="create" *ngxPermissionsOnly="['full_access', 'write_web']">
+          Crear Etiqueta
+        </button>
+        <!--end::Add user-->
+      </div>
+      <!--end::Toolbar-->
+    </div>
+    <!--end::Card toolbar-->
+    <app-choice-language (setLanguageEmit)="toogleLanguage($event)"></app-choice-language> 
+  </div>
+
+  <div class="card-body pt-0">
+    <app-crud [datatableConfig]="datatableConfig" route="/web-site/tags" module="Etiquetas" (activeEvent)="active($event)" (deleteEvent)="delete($event)" (editEvent)="edit($event)" (createEvent)="create()" [reload]="reloadEvent" [modal]="formModal"></app-crud>
+  </div>
+</div>
+
+<swal #noticeSwal [swalOptions]="swalOptions">
+</swal>
+
+<ng-template #formModal let-modal>
+  <form #myForm="ngForm" (ngSubmit)="onSubmit($event, myForm)">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Detalles del Etiqueta</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="d-flex flex-column scroll-y me-n7 pe-7 mw-650px" id="kt_modal_update_customer_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_customer_header" data-kt-scroll-wrappers="#kt_modal_update_customer_scroll"
+           data-kt-scroll-offset="300px">
+        <!--begin::Notice-->
+        <div class="notice d-flex bg-light-primary rounded border-primary border border-dashed mb-9 p-6">
+          <!--begin::Icon-->
+          <app-keenicon name="information" class="fs-2tx text-primary me-4"></app-keenicon>
+          <!--end::Icon-->
+          <!--begin::Wrapper-->
+          <div class="d-flex flex-stack flex-grow-1">
+            <!--begin::Content-->
+            <div class="fw-semibold">
+              <div class="fs-6 text-gray-700">La actualización de los datos del cliente recibirá una auditoría de privacidad. Para más información</div>
+            </div>
+            <!--end::Content-->
+          </div>
+          <!--end::Wrapper-->
+        </div>
+        <!--end::Notice-->
+        <app-choice-language (setLanguageEmit)="toogleLanguageModal($event)"></app-choice-language> 
+        <!--begin::User toggle-->
+        <div class="fw-bold fs-3 rotate collapsible mb-7" data-bs-toggle="collapse" role="button" (click)="collapse1.toggle()" [attr.aria-expanded]="!isCollapsed1" aria-controls="kt_modal_update_customer_user_info">
+          Información de Etiqueta
+          <span class="ms-2 rotate-180">
+            <i class="ki-duotone ki-down fs-3" [ngClass]="{ 'ki-up': !isCollapsed1 }"></i>
+          </span>
+        </div>
+        <!--end::User toggle-->
+
+        <!--begin::User form-->
+        <div class="collapse show" #collapse1="ngbCollapse" [(ngbCollapse)]="isCollapsed1">
+          <!--begin::Input group-->
+          <div class="fv-row mb-7">
+            <!--begin::Label-->
+            <label class="required fw-semibold fs-6 mb-2">Imagen</label>
+            <img [src]="thumbnail" *ngIf="thumbnail" width="150px" class="img-fluid cursor-pointer" (click)="file.click()">
+            <img src="assets/media/misc/image.png" *ngIf="!image && !thumbnail && !tagModel.image" width="150px" class="img-fluid cursor-pointer" (click)="file.click()">
+            <img src="assets/media/misc/image.png" *ngIf="tagModel._id && (!tagModel.image || tagModel.image === null || tagModel.image === undefined || tagModel.image.length === 0)" width="150px" class="img-fluid cursor-pointer" (click)="file.click()">
+            <img [src]="tagModel.image" [alt]="tagModel.image" width="150px" class="tag-image cursor-pointer" *ngIf="tagModel.image && !thumbnail" (click)="file.click()">
+            <br>
+            <input type="file" name="image" id="image" class="d-none" (change)="getImage($event)" #file required>
+          </div>
+          <!--begin::Input group-->
+          <div class="fv-row mb-7 position-relative" >
+            <!--begin::Label-->
+            <label class="required fw-semibold fs-6 mb-2">Nombre</label>
+            <!--end::Label-->
+            <!--begin::Input-->
+            <input type="text" class="form-control form-control-solid" name="name" [(ngModel)]="setName" #name="ngModel" required minlength="4" />
+            <div *ngIf="myForm.submitted && myForm.invalid" class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+              <div *ngIf="name.errors?.['required']">El nombre es requerido</div>
+              <div *ngIf="name.errors?.['minlength']">El nombre debe tener al menos 4 caracteres</div>
+            </div>
+            <!--end::Input-->
+          </div>
+          <!--end::Input group-->
+
+          <!--begin::Input group-->
+          <div *ngFor="let categoryId of selectedCategories; let i = index" class="fv-row mb-7">
+            <label class="required fw-semibold fs-6 mb-2">Categoria {{ i + 1 }}</label>
+            <select class="form-select form-select-solid" [name]="'category' + i" [(ngModel)]="selectedCategories[i]._id" (ngModelChange)="onCategoryChange(i, $event)">
+              <option value="" disabled>Seleccione una categoria</option>
+              <option *ngFor="let category of categories" [value]="category._id">
+                <span *ngFor="let translation of category.translations">
+                  <span *ngIf="translation.language == language">{{ translation.name }}</span>
+                </span>
+              </option>
+            </select>
+            <button type="button" (click)="removeCategory(i)" class="btn btn-primary">Eliminar</button> <!-- Botón para eliminar el proveedor -->
+          </div>
+          
+          <button type="button" (click)="addCategory()" class="btn btn-primary">Agregar Categoria</button> <!-- Botón para agregar más proveedores -->
+          <!--end::Input group-->
+
+          <!--begin::Input group-->
+          <div class="fv-row mb-7">
+            <!--begin::Label-->
+            <label class="fw-semibold fs-6 mb-2">
+              <span>Descripción</span>
+            </label>
+            <!--end::Label-->
+            <!--begin::Input-->
+            <quill-editor [(ngModel)]="setDescription" [modules]="quillModules" name="description" [style]="{ height: '300px' }"></quill-editor>
+            <!--end::Input-->
+          </div>
+          <!--end::Input group-->
+          <!--begin::Input group-->
+          <div class="fv-row mb-7">
+            <!--begin::Label-->
+            <label class="fw-semibold fs-6 mb-2">
+              <span>Introduccion</span>
+            </label>
+            <!--end::Label-->
+            <!--begin::Input-->
+            <quill-editor [(ngModel)]="setIntro" [modules]="quillModules" name="intro" [style]="{ height: '300px' }"></quill-editor>
+            <!--end::Input-->
+          </div>
+          <!--end::Input group-->
+
+          <!--begin::Input group-->
+          <div class="fv-row mb-7" >
+            <!--begin::Label-->
+            <label class="fw-semibold fs-6 mb-2">Parent</label>
+            <!--end::Label-->
+            <!--begin::Input-->
+            <input type="text" class="form-control form-control-solid" name="parent" [(ngModel)]="tagModel.parent" #key="ngModel" />
+            <!-- <div *ngIf="myForm.submitted && myForm.invalid" class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback">
+              <div *ngIf="section.errors?.['required']">El nombre es requerido</div>
+              <div *ngIf="section.errors?.['minlength']">El nombre debe tener al menos 4 caracteres</div>
+            </div> -->
+            <!--end::Input-->
+          </div>
+          <!--end::Input group-->
+
+          <div class="field col-12 mt-5 pt-3">
+            <div class="alert alert-primary mt-3" role="alert">
+              <app-keenicon name="success" class="fs-1"></app-keenicon>
+                Imágenes (Formato png, jpg o jpeg de tamaño 1,200 x 700 a 72 dpi)<br>
+            </div>
+        </div>
+        <div class="field col-12 mt-5 pt-3">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let image of tagModel.images; let i=index">
+                        <img [src]="image" class="w-100" [alt]="image">
+                        <button class="btn btn-icon btn-active-light-primary w-30px h-30px"
+                                (click)="deleteImageGallery(image)"
+                                class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm cursor-pointer"
+                                [disabled]="isLoading">
+                            <ng-container *ngIf="!isLoading">
+                              <i class="ki-duotone ki-trash fs-3">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                                <span class="path4"></span>
+                                <span class="path5"></span>
+                              </i>
+                            </ng-container>
+                            <ng-container *ngIf="isLoading">
+                              <span class="indicator-progress">
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                              </span>
+                            </ng-container>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field col-12 mt-5 pt-3">
+            <ngx-dropzone (change)="onSelect($event)">
+                <ngx-dropzone-label>¡Suélte, sus imágenes!</ngx-dropzone-label>
+                <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-image-preview>
+            </ngx-dropzone>
+        </div>
+
+        </div>
+        <!--end::User form-->
+      </div>
+    </div>
+    <div class="modal-footer flex-center">
+      <!--begin::Button-->
+      <button type="reset" id="kt_modal_update_customer_cancel" class="btn btn-light me-3" (click)="modal.dismiss('cancel')">
+        Descartar
+      </button>
+      <!--end::Button-->
+
+      <!--begin::Button-->
+      <button type="submit" id="kt_modal_update_customer_submit" class="btn btn-primary" [attr.data-kt-indicator]="isLoading ? 'on' : 'off'">
+        <span class="indicator-label">
+          Enviar
+        </span>
+        <span class="indicator-progress">
+          Espere por favor... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+        </span>
+      </button>
+      <!--end::Button-->
+    </div>
+  </form>
+</ng-template>

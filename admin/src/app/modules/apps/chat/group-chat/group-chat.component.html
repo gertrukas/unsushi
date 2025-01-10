@@ -1,0 +1,88 @@
+@if(!isLoading) {
+<div class="flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0">
+  <div class="card card-flush">
+    <div class="card-header pt-7" id="kt_chat_contacts_header">
+      <form class="w-100 position-relative" autoComplete="off">
+        <!-- <KTSVG
+                path='/media/icons/duotune/general/magnifier'
+                class='fs-2 fs-lg-1 text-gray500 position-absolute top-50 ms-5 translate-middle-y'
+              /> -->
+
+        <input type="text" class="form-control form-control-solid px-15" name="search" placeholder="Buscar por nombre o email..."/>
+      </form>
+    </div>
+    <div class="card-body pt-5" id="kt_chat_contacts_body">
+      <div class="scroll-y me-n5 pe-5 h-200px h-lg-auto" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
+           data-kt-scroll-dependencies="#kt_header, #kt_toolbar, #kt_footer, #kt_chat_contacts_header" data-kt-scroll-wrappers="#kt_content, #kt_chat_contacts_body" data-kt-scroll-offset="0px">
+        @for (user of userInfos; track user){
+          <div class="d-flex flex-stack py-4">
+            <div class="d-flex align-items-center">
+              <div class="symbol symbol-45px symbol-circle">
+                @if(user.avatar){
+                  <img [src]="url + user.avatar" class="fs-6 fw-bolder">
+                } @else {
+                  <span class="symbol-label bg-light-{{ random }} text-{{ random }} fs-6 fw-bolder">
+                    {{ user.name[0] }}
+                  </span>
+                }
+                @if(isConexion(user._id)){
+                  <div class="symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2"></div>
+                }
+              </div>
+                <div class="ms-5">
+                  <a class="fs-5 fw-bolder text-gray-900 text-hover-primary mb-2 cursor-pointer">
+                    {{ user.name }}
+                  </a>
+                  <div class="fw-bold text-gray-500">{{ user.email }}</div>
+  <!--                <div class="fw-bold text-gray-500">melody&#64;altbox.com</div>-->
+                </div>
+            </div>
+            <div class="d-flex flex-column align-items-end ms-2">
+              <span class="text-muted fs-7 mb-1">{{ setHors(user.last_login_at) }}</span>
+            </div>
+          </div>
+        <div class="separator separator-dashed d-none"></div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="flex-lg-row-fluid ms-lg-7 ms-xl-10">
+  <div class="card" id="kt_chat_messenger">
+    <div class="card-header" id="kt_chat_messenger_header">
+      <div class="card-title">
+        <div class="symbol-group symbol-hover">
+          @for (user of userOnline; track user){
+            <div class="symbol symbol-35px symbol-circle">
+              @if(user.avatar){
+                <img alt="Pic" [src]="url + user.avatar" />
+              } @else {
+                <span class="symbol-label bg-light-{{ random }} text-{{ random }} fs-6 fw-bolder">
+                  {{ user.name[0] }}
+                </span>
+              }
+            </div>
+          }
+          <a class="symbol symbol-35px symbol-circle cursor-pointer">
+            <span class="symbol-label fs-8 fw-bolder" data-bs-toggle="tooltip" data-bs-trigger="hover" title="View more users">
+              {{ userCount }}
+            </span>
+          </a>
+        </div>
+      </div>
+
+<!--      <div class="card-toolbar">-->
+<!--        <div class="me-n3">-->
+<!--          <button class="btn btn-sm btn-icon btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">-->
+<!--            <i class="bi bi-three-dots fs-2"></i>-->
+<!--          </button>-->
+<!--          <app-dropdown-menu1></app-dropdown-menu1>-->
+<!--        </div>-->
+<!--      </div>-->
+    </div>
+
+    <app-chat-inner userReceiving="group"></app-chat-inner>
+  </div>
+</div>
+}
