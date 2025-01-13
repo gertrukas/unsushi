@@ -11,7 +11,7 @@ export class UserDetailsComponent implements OnInit, AfterViewInit {
 
   isCollapsed: boolean;
 
-  user: IUserModel = { _id: '', name: '', email: '', };
+  user: IUserModel = { _id: '', name: '', email: '', role:'', password: '', confirmPassword: '' };
 
   constructor(
     private userService: UserService,
