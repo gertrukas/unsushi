@@ -86,8 +86,8 @@
     <label class="form-label fs-6 fw-bolder text-gray-900">Email</label>
     <input class="form-control bg-transparent" type="email" name="email" formControlName="email" autocomplete="off"
       [ngClass]="{
-        'is-invalid': loginForm.controls['email'].invalid,
-        'is-valid': loginForm.controls['email'].valid
+        'is-invalid': loginForm.controls['email'].invalid && loginForm.controls['email'].touched,
+        'is-valid': loginForm.controls['email'].valid && loginForm.controls['email'].touched
       }" />
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'required',
@@ -119,8 +119,8 @@
 
     <input class="form-control bg-transparent" type="password" name="password" autocomplete="off"
       formControlName="password" [ngClass]="{
-        'is-invalid': loginForm.controls['password'].invalid,
-        'is-valid': loginForm.controls['password'].valid
+        'is-invalid': loginForm.controls['password'].invalid && loginForm.controls['password'].touched,
+        'is-valid': loginForm.controls['password'].valid && loginForm.controls['password'].touched
       }" />
     <ng-container [ngTemplateOutlet]="formError" [ngTemplateOutletContext]="{
         validation: 'required',

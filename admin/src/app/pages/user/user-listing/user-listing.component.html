@@ -103,6 +103,52 @@
           </div>
           <!--end::Input group-->
 
+          <!-- Password Input -->
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control form-control-solid"
+              name="password"
+              [(ngModel)]="userModel.password"
+              #password="ngModel"
+              required
+              pattern="(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}"
+            />
+            <div
+              *ngIf="myForm.submitted && password.invalid"
+              class="fv-plugins-message-container invalid-feedback"
+            >
+              <div *ngIf="password.errors?.['required']">La contraseña es requerida</div>
+              <div *ngIf="password.errors?.['pattern']">
+                La contraseña debe tener al menos una mayúscula, un número y un símbolo
+              </div>
+            </div>
+          </div>
+
+          <!-- Confirm Password Input -->
+          <div class="form-group">
+            <label for="confirmPassword">Confirmar Contraseña</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              class="form-control form-control-solid"
+              name="confirmPassword"
+              [(ngModel)]="userModel.confirmPassword"
+              #confirmPassword="ngModel" required [pattern]="userModel.password"/>
+            <div *ngIf="myForm.submitted && confirmPassword.invalid" class="fv-plugins-message-container invalid-feedback">
+              <div *ngIf="confirmPassword.errors?.['required']">
+                La confirmación de contraseña es requerida
+              </div>
+              <div *ngIf="confirmPassword.errors?.['pattern']">
+                Las contraseñas no coinciden
+              </div>
+            </div>
+          </div>
+
+
+          
           <div class="mb-7">
             <label class="required fw-semibold fs-6 mb-5">Rol</label>
 

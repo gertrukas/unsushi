@@ -18,6 +18,7 @@ export interface IUserModel {
     name: string;
     email: string;
     password?: null | string;
+    confirmPassword?: string;
     pass?: null | string;
     active?: null | boolean;
     last_login_at?: null | string;

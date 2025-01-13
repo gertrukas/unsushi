@@ -29,7 +29,7 @@ export class UserListingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Single model
   aUser: Observable<IUserModel>;
-  userModel: IUserModel = { _id: '', name: '', email: '', role: '' };
+  userModel: IUserModel = { _id: '', name: '', email: '', role: '', password: '', confirmPassword: '' };
 
   @ViewChild('noticeSwal')
   noticeSwal!: SwalComponent;
@@ -188,7 +188,6 @@ export class UserListingComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     const createFn = () => {
-      this.userModel.password = 'test123';
       this.apiService.createUser(this.userModel).subscribe({
         next: () => {
           this.showAlert(successAlert);

@@ -16,8 +16,6 @@ export const locale = {
       SERVICES: 'Services',
       USERS: 'Users',
       CATEGORIES: 'Categories',
-      ROLES: 'Roles',
-      PERMISSIONS: 'Permissions',
       PRODUCTS: 'Products',
       BLOGS: 'Blogs',
       TAGS: 'Tags'
