@@ -68,10 +68,12 @@ def user_active():
     params = request.get_json()
     id = params.get('id')
     _user = User.get_user_by_id(id)
-    if _user.get('is_active'):
+    print(_user)
+    if _user and 'is_active' in _user and _user['is_active']:
         option = False
     else:
         option = True
+    print(option)    
     User.active_user(id, option)
     user = User.get_user_by_id(id)
     response = jsonify(serialize_object(user))

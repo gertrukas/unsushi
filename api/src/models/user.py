@@ -53,7 +53,7 @@ class User:
         return mongo.db.users.find_one({"_id": ObjectId(user_id)})
 
     @staticmethod
-    def get_user_by_id(email):
+    def get_user_by_email(email):
         return mongo.db.users.find_one({"email": email})
 
     @staticmethod
