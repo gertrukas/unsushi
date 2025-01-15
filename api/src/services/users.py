@@ -68,7 +68,7 @@ def user_active():
     params = request.get_json()
     id = params.get('id')
     _user = User.get_user_by_id(id)
-    if _user.get('active'):
+    if _user.get('is_active'):
         option = False
     else:
         option = True
