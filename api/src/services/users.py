@@ -4,6 +4,7 @@ from flask_bcrypt import generate_password_hash
 from ..config  import mongo
 from flask import jsonify
 from datetime import datetime, timedelta
+from ..models import User
 
 def convert_objectid_to_str(data):
     if isinstance(data, list):
@@ -26,8 +27,8 @@ def serialize_object(obj):
 def users_get():
     users = []
     # Realizar la consulta a MongoDB
-    cursor = mongo.db.users.find({"delete": False})
-    count = mongo.db.users.count_documents({"delete": False})
+    cursor = mongo.db.users.find({"is_delete": False})
+    count = mongo.db.users.count_documents({"is_delete": False})
     users_list = list(cursor)  # Convertir el cursor a una lista
 
     for user in users_list:
@@ -58,66 +59,53 @@ def users_get():
     return response
 
 def user_get(id):
-    _user = mongo.db.users.find_one({ "_id": ObjectId(id)})
-    user = serialize_object(_user)
-    response = jsonify(user)
+    user = User.get_user_by_id(id)
+    response = jsonify(serialize_object(user))
     response.status_code = 200
     return response
 
 def user_active():
     params = request.get_json()
     id = params.get('id')
-    __user = mongo.db.users.find_one({"_id": ObjectId(id)})
-    if __user.get('active'):
+    _user = User.get_user_by_id(id)
+    if _user.get('active'):
         option = False
     else:
         option = True
-    mongo.db.users.update_one({ "_id": ObjectId(id)}, {"$set": {"active": option}})
-    _user = mongo.db.users.find_one({"_id": ObjectId(id)})
-    user = serialize_object(_user)
-    response = jsonify(user)
+    User.active_user(id, option)
+    user = User.get_user_by_id(id)
+    response = jsonify(serialize_object(user))
     response.status_code = 200
     return response
 
 def user_post():
-    now = datetime.now()
-    formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")
     params = request.get_json()
+    name = params.get('name')
+    email = params.get('email')
     password = generate_password_hash(params.get('password')).decode('utf-8')
     role = params.get('role')
-    mongo.db.users.insert_one({
-        'name': params.get('name'),
-        'email': params.get('email'),
-        'password': password,
-        "email_verified_at": None,
-        "avatar": None,
-        "created_at": formatted_date,
-        "updated_at": None,
-        "last_login_at": None,
-        "last_login_ip": None,
-        "profile_photo_path": None,
-        "roles": [],
-        "role": '',
-        'active': True,
-        'delete': False,
-    })
-    _user = mongo.db.users.find_one({ "email": params.get('email')})
+    _user = User(name, email, password)
+    user_id = _user.save()
+    if isinstance(user_id, dict) and 'error' in user_id:
+        response = jsonify({"message": user_id.get('error')})
+        response.status_code = 409
+        return response
+
+    user = User.get_user_by_id(user_id)
     if role:
         _role = mongo.db.roles.find_one({"name": role})
-        mongo.db.users.update_one({"_id": ObjectId(_user['_id'])}, {"$push": {"roles": _role['_id'] }})
-        mongo.db.roles.update_one({"_id": ObjectId(_role['_id'])}, {"$addToSet": {"users": _user['_id'] }})
+        roles = []
+        roles.append(_role.get('_id'))
+        User.update_roles_and_user(user_id, roles)
 
-    user = serialize_object(_user)
     result = {
-        "success": user
+        "success": serialize_object(user)
     }
     response = jsonify(result)
     response.status_code = 200
     return response
 
 def user_put(id):
-    now = datetime.now()
-    formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")
     params = request.get_json()
     if '_id' in params:
         del params['_id']
@@ -125,27 +113,19 @@ def user_put(id):
     __role = params.get('role')
     if __role:
         _role = mongo.db.roles.find_one({"name": __role})
-        mongo.db.users.update_one({"_id": ObjectId(id)}, {"$push": {"roles": _role['_id']}})
-        mongo.db.roles.update_one({"_id": ObjectId(_role['_id'])}, {"$addToSet": {"users": id}})
+        User.update_user(id, { "role": _role.get('_id')})
 
-    mongo.db.users.update_one({"_id": ObjectId(id)}, {"$set": params})
+    User.update_user(id, params)
 
-    mongo.db.users.update_one({"_id": ObjectId(id)}, {"$set": {"updated_at": formatted_date}})
-    _user = mongo.db.users.find_one({ "_id": ObjectId(id)})
-
-    user = serialize_object(_user)
-    response = jsonify(user)
+    user = User.get_user_by_id(id)
+    response = jsonify(serialize_object(user))
     response.status_code = 200
     return response
 
 def user_delete(id):
-    now = datetime.now()
-    formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")
-    mongo.db.users.update_one({ "_id": ObjectId(id)}, {"$set": {"delete": True, "updated_at": formatted_date }})
-    _user = mongo.db.users.find_one({ "_id": ObjectId(id)})
-    user = serialize_object(_user)
-    message = 'El usuario se elimino correctamente'
-    response = jsonify({"message": message, "user": user})
+    User.delete_user(id)
+    user = User.get_user_by_id(id)
+    response = jsonify({"message": 'El usuario se elimino correctamente', "user": serialize_object(user)})
     response.status_code = 200
     return response
 

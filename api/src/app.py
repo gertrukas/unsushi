@@ -5,6 +5,7 @@ from flask_bcrypt import Bcrypt
 import os
 from src.config import init_app, socketio
 from src.routes import register_blueprints
+from src.models import User
 
 environment = os.getenv('FLASK_ENV', 'dev')
 
@@ -36,6 +37,8 @@ register_blueprints(app)
 
 bcrypt = Bcrypt(app)
 bcrypt.init_app(app)
+
+User.initialize_indexes()
 
 # Configuración para subir archivos
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')  # Directorio de archivos subidos

@@ -108,7 +108,7 @@
             <label for="password">Contraseña</label>
             <input type="password" id="password" class="form-control form-control-solid" name="password" [(ngModel)]="userModel.password" 
             #password="ngModel" required pattern="(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}"/>
-            <div class="fv-plugins-message-container mt-1 b-5" [ngClass]="{'invalid-feedback': myForm.submitted && password.invalid && password.errors?.['pattern']}"> La contraseña debe tener al menos una mayúscula, un número y un símbolo</div>
+            <div class="fv-plugins-message-container mt-1 mb-5" [ngClass]="{'invalid-feedback': myForm.submitted && password.invalid && password.errors?.['pattern']}"> La contraseña debe tener al menos una mayúscula, un número y un símbolo</div>
             <div *ngIf="myForm.submitted && password.invalid" class="fv-plugins-message-container invalid-feedback">
               <div *ngIf="password.errors?.['required']">La contraseña es requerida</div>
             </div>

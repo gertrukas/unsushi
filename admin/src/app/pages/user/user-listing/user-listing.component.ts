@@ -107,7 +107,7 @@ export class UserListingComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         },
         {
-          title: 'Status', data: 'active', render: function (data) {
+          title: 'Status', data: 'is_active', render: function (data) {
             let result = ''
             if(data){
               result = `<div class="badge badge-success fw-bold">Activo</div>`;
@@ -194,7 +194,7 @@ export class UserListingComponent implements OnInit, AfterViewInit, OnDestroy {
           this.reloadEvent.emit(true);
         },
         error: (error) => {
-          errorAlert.text = this.extractText(error.error);
+          errorAlert.text = error.error.message ? error.error.message: this.extractText(error.error);
           this.showAlert(errorAlert);
           this.isLoading = false;
         },
