@@ -59,8 +59,8 @@ def login():
     
     id = str(user.get('_id'))
     role = user.get('role')
-    active = user.get('active')
-    delete = user.get('delete')
+    active = user.get('is_active')
+    delete = user.get('is_delete')
     
     if not check_password_hash(user.get('password'), password):
         return jsonify({"message": "Contraseña equivocada"}), 403
@@ -70,9 +70,6 @@ def login():
 
     if not active:
         return jsonify({"message": "Usuario no está activo"}), 406
-
-    if role in ['USER_ROLE', 'CLIENT_ROLE']:
-        return jsonify({"message": "El perfil de usuario no tiene acceso"}), 402
 
     # Definir el tiempo de expiración del token (ejemplo: 1 hora)
     expires = timedelta(hours=1)
