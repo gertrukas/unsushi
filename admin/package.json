@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && npm run copy-htaccess",
+    "copy-htaccess": "cp src/assets/.htaccess.template dist/demo1/.htaccess",
     "watch": "ng build --watch --configuration development",
     "rtl": "webpack --config=rtl.config.js",
     "test": "ng test",
