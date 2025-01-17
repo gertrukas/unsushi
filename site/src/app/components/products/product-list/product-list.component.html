@@ -1,19 +1,39 @@
 <div class="row">
     <div class="col12 col-md-6 col-lg-4 col-xl-3" *ngFor="let product of products">
       <p *ngFor="let translation of product.translations">
-        <span *ngIf="translation.language == 'es'">{{ translation.name }}</span>
+        <img *ngIf="translation.language == translator.getCurrentLanguage()" [src]="product.image"  [alt]="translation.name"  class="img-fluid" width="100%" >
       </p>
-      <p>{{ product.description }}</p>
-      <p>{{ product.intro }}</p>
-      <p>{{ product.date }}</p>
+      <p *ngFor="let translation of product.translations">
+        <span *ngIf="translation.language == translator.getCurrentLanguage()" [innerHTML]="translation.name"></span>
+      </p>
+      <p *ngFor="let translation of product.translations">
+        <span *ngIf="translation.language == translator.getCurrentLanguage()" [innerHTML]="translation.description"></span>
+      </p>
+      <p *ngFor="let translation of product.translations">
+        <span *ngIf="translation.language == translator.getCurrentLanguage()" [innerHTML]="translation.intro"></span>
+      </p>
       <p>{{ product.model }}</p>
       <p>{{ product.key }}</p>
-      <a [routerLink]="['/producto', product.slug]" class="-boton-azul btn btn-primary">ver mas</a>
+      <ng-container *ngFor="let translation of product.translations">
+        <ng-container *ngIf="translation.language === translator.getCurrentLanguage()">
+          <a *ngIf="translator.getCurrentLanguage() === 'es'" [routerLink]="['/producto', translation.slug]" class="-boton-azul btn btn-primary">ver mas</a>
+          <a *ngIf="translator.getCurrentLanguage() === 'en'" [routerLink]="['/product', translation.slug]" class="-boton-azul btn btn-primary">see more</a>
+        </ng-container>
+      </ng-container>
       <div class="row">
         <div class="col-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let category of product.categories">
-          <p>{{ category.name }}</p>
-          <p>{{ category.description }}</p>
-          <img [src]="category.image"  [alt]="category.name"  class="img-fluid" width="100%" >
+          <p *ngFor="let translation of category.translations">
+            <span *ngIf="translation.language == translator.getCurrentLanguage()" [innerHTML]="translation.name"></span>
+          </p>
+          <p *ngFor="let translation of category.translations">
+            <span *ngIf="translation.language == translator.getCurrentLanguage()" [innerHTML]="translation.description"></span>
+          </p>
+          <p *ngFor="let translation of category.translations">
+            <span *ngIf="translation.language == translator.getCurrentLanguage()" [innerHTML]="translation.intro"></span>
+          </p>
+          <p *ngFor="let translation of category.translations">
+            <img *ngIf="translation.language == translator.getCurrentLanguage()" [src]="category.image"  [alt]="translation.name"  class="img-fluid" width="100%" >
+          </p>
         </div>
       </div>
       <img [src]="product.image"  [alt]="product.name"  class="img-fluid" width="100%" >

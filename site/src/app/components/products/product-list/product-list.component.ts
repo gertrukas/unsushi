@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../../services/products.service';
 import { Product } from '../../../interfaces/product';
+import { TranslationService } from '../../../services/translation.service';
 
 @Component({
   selector: 'app-product-list',
@@ -14,7 +15,7 @@ export class ProductListComponent implements OnInit{
   private currentPage: number = 1;
   isloading: boolean = false;
 
-  constructor(private service: ProductsService) {
+  constructor(private service: ProductsService, public translator: TranslationService) {
   }
 
   ngOnInit() {
