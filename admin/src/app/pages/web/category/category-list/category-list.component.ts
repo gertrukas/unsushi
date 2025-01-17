@@ -11,8 +11,6 @@ import hljs from 'highlight.js';
 import { TranslationService } from 'src/app/modules/i18n';
 import { environment } from 'src/environments/environment';
 
-const API_URL = `${environment.apiUrl}`;
-
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
@@ -20,6 +18,7 @@ const API_URL = `${environment.apiUrl}`;
 })
 export class CategoryListComponent implements OnInit, OnDestroy {
 
+  API_URL = `${environment.apiUrl}`;
   isCollapsed1 = false;
   isCollapsed2 = true;
 

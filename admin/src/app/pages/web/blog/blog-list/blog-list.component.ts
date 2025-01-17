@@ -15,7 +15,6 @@ import { TranslationService } from '../../../../modules/i18n';
 import { DatePipe } from '@angular/common';
 import { environment } from 'src/environments/environment';
 
-const API_URL = `${environment.apiUrl}`;
 
 @Component({
   selector: 'app-blog-list',
@@ -23,7 +22,9 @@ const API_URL = `${environment.apiUrl}`;
   styleUrl: './blog-list.component.scss',
   providers: [ DatePipe ]
 })
-export class BlogListComponent implements OnInit, OnDestroy{
+export class BlogListComponent implements OnInit, OnDestroy {
+
+  API_URL = `${environment.apiUrl}`;
 
   isCollapsed1 = false;
   isCollapsed2 = true;
