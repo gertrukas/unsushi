@@ -7,7 +7,7 @@ from .products import products_get, products_data_table_get, product_get, produc
 from .roles import roles_get, role_get, role_post, role_users_post, role_active, role_put, role_delete
 from .users import users_get, user_get, user_active, user_post, user_put, user_delete, get_online_users
 from .tags import tags_get, tags_data_table_get, tag_get, tag_active, tag_post, tag_put, tag_delete, image_gallery_tag_delete
-from .public import search_get_all
+from .public import search_get_all, products_public_get
 
 __all__ = [
     'blogs_get', 'blogs_data_table_get', 'blog_get', 'blog_active', 'blog_post', 'blog_put', 'blog_delete', 'image_gallery_blog_delete',
@@ -19,5 +19,5 @@ __all__ = [
     'roles_get', 'role_get', 'role_post', 'role_users_post', 'role_active', 'role_put', 'role_delete',
     'users_get', 'user_get', 'user_active', 'user_post', 'user_put', 'user_delete', 'get_online_users',
     'tags_get', 'tags_data_table_get', 'tag_get', 'tag_active', 'tag_post', 'tag_put', 'tag_delete', 'image_gallery_tag_delete',
-    'search_get_all'
+    'search_get_all', 'products_public_get'
 ]

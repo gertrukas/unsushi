@@ -62,12 +62,22 @@ class User:
         return mongo.db.users.update_one({"_id": ObjectId(user_id)}, {"$set": updates})
     
     @staticmethod
-    def update_roles_and_user(user_id, roles):
+    def update_roles_in_user(user_id, roles):
         return mongo.db.users.update_one(
             {"_id": ObjectId(user_id)},  # Filtro para encontrar el usuario
             {
                 "$set": {"updated_at": datetime.utcnow()},  # Actualiza la marca de tiempo
                 "$addToSet": {"roles": {"$each": [ObjectId(role) for role in roles]}}  # Agrega roles sin duplicados
+            }
+        )
+    
+    @staticmethod
+    def update_user_in_rol(user_id, role_id):
+        return mongo.db.users.update_one(
+            {"_id": ObjectId(user_id)},  # Filtro para encontrar el usuario
+            {
+                "$set": {"updated_at": datetime.utcnow()},  # Actualiza la marca de tiempo
+                "$addToSet": {"roles": ObjectId(role_id)}  # Agrega roles sin duplicados
             }
         )
     

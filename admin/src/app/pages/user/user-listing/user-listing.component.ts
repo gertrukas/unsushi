@@ -95,26 +95,8 @@ export class UserListingComponent implements OnInit, AfterViewInit, OnDestroy {
           type: 'string',
         },
         {
-          title: 'Ultimo login', data: 'last_login_at', render: (data, type, full) => {
-            const date = data || full.created_at;
-            const dateString = moment(date).fromNow();
-            return `<div class="badge badge-light fw-bold">${dateString}</div>`;
-          }
-        },
-        {
           title: 'Fecha creación', data: 'created_at', render: function (data) {
             return moment(data).format('DD MMM YYYY, hh:mm a');
-          }
-        },
-        {
-          title: 'Status', data: 'is_active', render: function (data) {
-            let result = ''
-            if(data){
-              result = `<div class="badge badge-success fw-bold">Activo</div>`;
-            } else {
-              result = `<div class="badge badge-danger fw-bold">Inactivo</div>`;
-            }
-            return result;
           }
         }
       ],

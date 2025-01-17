@@ -9,7 +9,9 @@ import { Category } from "../../../../interfaces/category";
 import { CategoryService } from "../../../../services/category.service";
 import hljs from 'highlight.js';
 import { TranslationService } from 'src/app/modules/i18n';
+import { environment } from 'src/environments/environment';
 
+const API_URL = `${environment.apiUrl}`;
 
 @Component({
   selector: 'app-category-list',

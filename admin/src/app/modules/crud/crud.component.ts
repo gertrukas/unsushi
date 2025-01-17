@@ -128,15 +128,15 @@ export class CrudComponent implements OnInit, AfterViewInit, OnDestroy {
             </i>
           </button>`;
         const activeButton = `
-          <button class="btn btn-icon btn-active-light-primary w-30px h-30px" data-action="active" data-id="${full._id}">
-            <i class="ki-duotone ki-toggle-on-circle fs-3">
+          <button class="btn btn-icon w-30px h-30px ${full.is_active ? 'btn-active-light-success' : 'btn-active-light-danger'}" data-action="active" data-id="${full._id}">
+            <i class="ki-duotone ki-toggle-on-circle fs-3" style="color: ${full.is_active ? 'green' : 'red'}">
               <span class="path1"></span>
               <span class="path2"></span>
             </i>
           </button>`;
 
         const editButton = `
-          <button class="btn btn-icon btn-active-light-primary w-30px h-30px" data-action="edit" data-id="${full._id}">
+          <button class="btn btn-icon w-30px h-30px btn-active-light-primary" data-action="edit" data-id="${full._id}">
             <i class="ki-duotone ki-pencil fs-3">
               <span class="path1"></span>
               <span class="path2"></span>
@@ -144,7 +144,7 @@ export class CrudComponent implements OnInit, AfterViewInit, OnDestroy {
           </button>`;
 
         const deleteButton = `
-          <button class="btn btn-icon btn-active-light-primary w-30px h-30px" data-action="delete" data-id="${full._id}">
+          <button class="btn btn-icon btn-active-light-danger w-30px h-30px" data-action="delete" data-id="${full._id}">
             <i class="ki-duotone ki-trash fs-3">
               <span class="path1"></span>
               <span class="path2"></span>

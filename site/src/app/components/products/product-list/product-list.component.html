@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col12 col-md-6 col-lg-4 col-xl-3" *ngFor="let product of products">
+      <p *ngFor="let translation of product.translations">
+        <span *ngIf="translation.language == 'es'">{{ translation.name }}</span>
+      </p>
+      <p>{{ product.description }}</p>
+      <p>{{ product.intro }}</p>
+      <p>{{ product.date }}</p>
+      <p>{{ product.model }}</p>
+      <p>{{ product.key }}</p>
+      <a [routerLink]="['/producto', product.slug]" class="-boton-azul btn btn-primary">ver mas</a>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let category of product.categories">
+          <p>{{ category.name }}</p>
+          <p>{{ category.description }}</p>
+          <img [src]="category.image"  [alt]="category.name"  class="img-fluid" width="100%" >
+        </div>
+      </div>
+      <img [src]="product.image"  [alt]="product.name"  class="img-fluid" width="100%" >
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let image of product.images; let i=index">
+        Aqui empieza las galerias
+        <img [src]="image" class="w-100" [alt]="image">
+      </div>
+    </div>
+  </div>

@@ -50,6 +50,12 @@ class Product:
         # Actualiza un producto con los datos especificados
         updates['updated_at'] = datetime.utcnow()
         return mongo.db.products.update_one({"_id": ObjectId(product_id)}, {"$set": updates})
+    @staticmethod
+    def get_pagination_products(query, start, length):
+        # Actualiza un producto con los datos especificados
+        return list(mongo.db.products.find(query)
+                                .skip(start)
+                                .limit(length))
     
     @staticmethod
     def active_product(product_id, option):
@@ -89,6 +95,12 @@ class ProductTranslation:
         }
         result = mongo.db.product_translations.insert_one(translation_data)
         return result.inserted_id
+    
+    @staticmethod
+    def get_pagination_products_translation(query, start, length):
+        return list(mongo.db.product_translations.find(query)
+                                .skip(start)
+                                .limit(length))
     
     @staticmethod
     def get_product_translation_by_id(product_id):

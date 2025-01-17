@@ -63,9 +63,7 @@ def get_search_page_all(start, length, search_value, language):
     translations_blogs = list(mongo.db.blog_translations.find(query)
                             .skip(start)
                             .limit(length))
-    translations_products = list(mongo.db.product_translations.find(query)
-                            .skip(start)
-                            .limit(length))
+    translations_products = ProductTranslation.get_pagination_products_translation(query, start, length)
     translations_categories = list(mongo.db.category_translations.find(query)
                             .skip(start)
                             .limit(length))
@@ -107,3 +105,55 @@ def get_search_page_all(start, length, search_value, language):
     }    
     
     return serialize_object(combined_result) 
+
+def products_public_get():
+    params = request.get_json()
+    # Obtener parámetros de paginación
+    start = int(params.get('start', 0))  # Indice de inicio para la paginación
+    if start > 1:
+        start = (start - 1) * length
+    else:
+        start = 0
+    length = int(params.get('length', 8))  # Número de registros por página
+    search_value = params.get('search_value', '')  # Valor de búsqueda (opcional)
+    language = params.get('language', '')
+
+    # Lógica para obtener los registros de la página actual
+    data = get_products_all(start, length, search_value, language)  # Obtén registros con paginación
+
+    result = {
+        "data": data  # Los datos de la página actual
+    }
+
+    response = jsonify(result)
+    response.status_code = 200
+    return response
+
+def get_products_all(start, length, search_value=None, language='es'):
+    query = {
+        "is_active": True,
+        "is_delete": False
+    }
+    products_list = []
+    if search_value:
+        query = {
+            "language":  language,
+            '$or': [
+                {'description': {'$regex': search_value, '$options': 'i'}},  # Búsqueda insensible a mayúsculas
+                {'name': {'$regex': search_value, '$options': 'i'}},  # Otros campos donde se puede buscar
+                {'intro': {'$regex': search_value, '$options': 'i'}}  # Otros campos donde se puede buscar
+            ]
+        }
+        translations_products = ProductTranslation.get_pagination_products_translation(query, start, length)
+        
+        for product_translations in translations_products:
+            product = Product.get_product_by_id(product_translations['product'])
+            product['translations'] = list(ProductTranslation.get_products_translation_by_product_id(product_translations['product']))
+            products_list.append(product)
+    else:
+        _products = Product.get_pagination_products(query, start, length)
+        for product in _products:
+            product['translations'] = list(ProductTranslation.get_products_translation_by_product_id(product['_id']))
+            products_list.append(product)
+
+    return serialize_object(products_list)

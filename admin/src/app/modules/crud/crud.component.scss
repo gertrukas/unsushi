@@ -1,0 +1,23 @@
+.btn {
+    color: red;
+}
+.btn .ki-trash {
+    color: red;
+}
+.color-red {
+    color: red !important;
+}
+
+.color-red:hover {
+    color: green;
+    transition: color 0.3s;
+}
+
+.color-green {
+    color: green !important;
+}
+  
+.color-green:hover {
+    color: red;
+    transition: color 0.3s;
+}

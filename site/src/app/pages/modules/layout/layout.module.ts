@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { Routing } from '../../routing';
 import { LayoutComponent } from './layout.component';
 import { ComponentsModule } from '../../../components/components.module';
+import { HomeComponent } from '../../public/home/home.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    LayoutComponent
+    LayoutComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,

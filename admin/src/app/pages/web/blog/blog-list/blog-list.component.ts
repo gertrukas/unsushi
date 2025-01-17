@@ -13,6 +13,9 @@ import { FormControl } from '@angular/forms';
 import hljs from 'highlight.js';
 import { TranslationService } from '../../../../modules/i18n';
 import { DatePipe } from '@angular/common';
+import { environment } from 'src/environments/environment';
+
+const API_URL = `${environment.apiUrl}`;
 
 @Component({
   selector: 'app-blog-list',

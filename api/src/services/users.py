@@ -68,12 +68,10 @@ def user_active():
     params = request.get_json()
     id = params.get('id')
     _user = User.get_user_by_id(id)
-    print(_user)
     if _user and 'is_active' in _user and _user['is_active']:
         option = False
     else:
-        option = True
-    print(option)    
+        option = True  
     User.active_user(id, option)
     user = User.get_user_by_id(id)
     response = jsonify(serialize_object(user))
@@ -98,7 +96,8 @@ def user_post():
         _role = mongo.db.roles.find_one({"name": role})
         roles = []
         roles.append(_role.get('_id'))
-        User.update_roles_and_user(user_id, roles)
+        User.update_roles_in_user(user_id, roles)
+        User.update_user_in_rol(user_id, _role['_id'])
 
     result = {
         "success": serialize_object(user)

@@ -79,7 +79,7 @@
             <img [src]="thumbnail" *ngIf="thumbnail" width="150px" class="img-fluid cursor-pointer" (click)="file.click()">
             <img src="assets/media/misc/image.png" *ngIf="!image && !thumbnail && !tagModel.image" width="150px" class="img-fluid cursor-pointer" (click)="file.click()">
             <img src="assets/media/misc/image.png" *ngIf="tagModel._id && (!tagModel.image || tagModel.image === null || tagModel.image === undefined || tagModel.image.length === 0)" width="150px" class="img-fluid cursor-pointer" (click)="file.click()">
-            <img [src]="tagModel.image" [alt]="tagModel.image" width="150px" class="tag-image cursor-pointer" *ngIf="tagModel.image && !thumbnail" (click)="file.click()">
+            <img [src]="API_URL + tagModel.image" [alt]="tagModel.image" width="150px" class="tag-image cursor-pointer" *ngIf="tagModel.image && !thumbnail" (click)="file.click()">
             <br>
             <input type="file" name="image" id="image" class="d-none" (change)="getImage($event)" #file required>
           </div>
