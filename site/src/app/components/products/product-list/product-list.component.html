@@ -1,7 +1,7 @@
 <div class="row">
-    <div class="col12 col-md-6 col-lg-4 col-xl-3" *ngFor="let product of products">
+    <div class="grid grid-flow-col grid-cols-3 grid-rows-3 gap-4" *ngFor="let product of products">
       <p *ngFor="let translation of product.translations">
-        <img *ngIf="translation.language == translator.getCurrentLanguage()" [src]="product.image"  [alt]="translation.name"  class="img-fluid" width="100%" >
+        <img *ngIf="translation.language == translator.getCurrentLanguage()" [src]="product.image"  [alt]="translation.name"  class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80" >
       </p>
       <p *ngFor="let translation of product.translations">
         <span *ngIf="translation.language == translator.getCurrentLanguage()" [innerHTML]="translation.name"></span>
@@ -21,7 +21,7 @@
         </ng-container>
       </ng-container>
       <div class="row">
-        <div class="col-12 col-md-6 col-lg-4 col-xl-3" *ngFor="let category of product.categories">
+        <div class="grid grid-flow-col grid-cols-3 grid-rows-3 gap-4" *ngFor="let category of product.categories">
           <p *ngFor="let translation of category.translations">
             <span *ngIf="translation.language == translator.getCurrentLanguage()" [innerHTML]="translation.name"></span>
           </p>
@@ -33,14 +33,14 @@
           </p>
           <p *ngFor="let translation of category.translations">
             <ng-container *ngIf="translation.language === translator.getCurrentLanguage()">
-              <img [src]="category.image"  [alt]="translation.name"  class="img-fluid" width="100%" >
+              <img [src]="category.image"  [alt]="translation.name"  class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80" >
             </ng-container>
           </p>
         </div>
       </div>
-      <img [src]="product.image"  [alt]="product.name"  class="img-fluid" width="100%" >
-      <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let image of product.images; let i=index">
-        Aqui empieza las galerias
+      <img [src]="product.image"  [alt]="product.name"  class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80" >
+      Aqui empieza las galerias
+      <div class="grid grid-flow-col grid-cols-3 grid-rows-3 gap-4" *ngFor="let image of product.images; let i=index">
         <img [src]="image" class="w-100" [alt]="image">
       </div>
     </div>
