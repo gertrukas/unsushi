@@ -32,7 +32,9 @@
             <span *ngIf="translation.language == translator.getCurrentLanguage()" [innerHTML]="translation.intro"></span>
           </p>
           <p *ngFor="let translation of category.translations">
-            <img *ngIf="translation.language == translator.getCurrentLanguage()" [src]="category.image"  [alt]="translation.name"  class="img-fluid" width="100%" >
+            <ng-container *ngIf="translation.language === translator.getCurrentLanguage()">
+              <img [src]="category.image"  [alt]="translation.name"  class="img-fluid" width="100%" >
+            </ng-container>
           </p>
         </div>
       </div>
