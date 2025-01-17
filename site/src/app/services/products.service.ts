@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
-const API_URL = `${environment.apiUrl}/public/products`;
+const API_URL = `${environment.apiUrl}/public`;
 const ADMIN_URL = `${environment.adminUrl}`;
 
 @Injectable({
@@ -14,10 +14,10 @@ export class ProductsService {
 
 
   getProducts(start: number, search_value: string){
-    return this.http.post<any>(`${API_URL}`, {start, search_value});
+    return this.http.post<any>(`${API_URL}/products`, {start, search_value});
   }
 
-  getProduct(slug: string){
-    return this.http.get<any>(`${API_URL}/${slug}`);
+  getProduct(slug: string, language: string){
+    return this.http.post<any>(`${API_URL}/product`, {slug, language});
   }
 }

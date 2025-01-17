@@ -6,13 +6,12 @@ export interface Product {
     slug: string;
     description: string;
     intro: string;
-    date: Date;
     model: string;
     key: string;
     new: string;
     size: string;
-    translations: [Translation];
-    categories: [Category];
+    translations: Translation[];
+    categories: Category[];
     image: string;
     images: [];
     active: boolean;

@@ -5,6 +5,7 @@ import { Routing } from '../../routing';
 import { LayoutComponent } from './layout.component';
 import { ComponentsModule } from '../../../components/components.module';
 import { HomeComponent } from '../../public/home/home.component';
+import { ProductDetailsComponent } from '../../public/product-details/product-details.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     LayoutComponent,
-    HomeComponent
+    HomeComponent,
+    ProductDetailsComponent
   ],
   imports: [
     CommonModule,

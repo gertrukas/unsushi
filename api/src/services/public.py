@@ -157,3 +157,21 @@ def get_products_all(start, length, search_value=None, language='es'):
             products_list.append(product)
 
     return serialize_object(products_list)
+
+def product_public_get():
+    params = request.get_json()
+    slug = params.get('slug', '')  # Valor de búsqueda (opcional)
+    language = params.get('language', '')
+
+    # Lógica para obtener los registros de la página actual
+    translation = ProductTranslation.get_product_translation_by_slug(slug)
+    product = Product.get_product_by_id(translation['product'])
+    product['translations'] = list(ProductTranslation.get_products_translation_by_product_id(product['_id']))
+
+    result = {
+        "data": serialize_object(product)  # Los datos de la página actual
+    }
+
+    response = jsonify(result)
+    response.status_code = 200
+    return response
